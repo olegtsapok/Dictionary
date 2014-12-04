@@ -73,8 +73,7 @@ class CrudController extends Controller
 
         if(isset($_POST[$module])) {
                 $model->attributes=$_POST[$module];
-
-
+                $this->beforeSave($model);
                 if($model->validate() and $model->save()) {
                     $this->afterSave($model);
                     $this->redirect(array('view','id'=>$model->id));
@@ -107,6 +106,7 @@ class CrudController extends Controller
         if(isset($_POST[$module]))
         {
                 $model->attributes=$_POST[$module];
+                $this->beforeSave($model);
                 if($model->save()) {
                     $this->afterSave($model);
                     $this->redirectAfterSave($model);
@@ -122,9 +122,13 @@ class CrudController extends Controller
         $this->redirect(array('index'));
     }
 
+    protected function beforeSave($model)
+    {
+
+    }
     protected function afterSave($model)
     {
-        
+
     }
 
     /**

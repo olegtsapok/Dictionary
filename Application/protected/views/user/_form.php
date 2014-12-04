@@ -43,18 +43,6 @@
 		<?php echo $form->error($model,'new_password'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone'); ?>
-		<?php echo $form->textField($model,'phone',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'phone'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->dropDownList($model,'role', CHtml::listData(Role::model()->findAll("role <> 'super_admin'"), 'role', 'name')); ?>
-		<?php echo $form->error($model,'role'); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

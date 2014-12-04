@@ -1,3 +1,4 @@
 /Application/logs/
 /Application/cache/
 /Application/assets/
+/Application/protected/runtime/application.log

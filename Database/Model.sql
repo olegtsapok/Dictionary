@@ -2,13 +2,11 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `dictionary` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-USE `dictionary` ;
 
 -- -----------------------------------------------------
--- Table `dictionary`.`user`
+-- Table `user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dictionary`.`user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(100) NULL,
   `last_name` VARCHAR(100) NULL,
@@ -22,9 +20,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dictionary`.`language`
+-- Table `language`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dictionary`.`language` (
+CREATE TABLE IF NOT EXISTS `language` (
   `id` VARCHAR(2) NOT NULL,
   `name` VARCHAR(100) NULL,
   PRIMARY KEY (`id`))
@@ -32,15 +30,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dictionary`.`dictionary`
+-- Table `dictionary`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dictionary`.`dictionary` (
+CREATE TABLE IF NOT EXISTS `dictionary` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(150) NULL,
   `description` TEXT NULL,
   `lang_source` VARCHAR(2) NULL,
   `lang_translation` VARCHAR(2) NULL,
-  `created_dt` TIMESTAMP NULL,
+  `created_dt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` INT NULL,
   `type` INT NULL DEFAULT 0 COMMENT '0 - private, 1 - common',
   PRIMARY KEY (`id`),
@@ -49,26 +47,26 @@ CREATE TABLE IF NOT EXISTS `dictionary`.`dictionary` (
   INDEX `fk_dictionary_langtranslat_idx` (`lang_translation` ASC),
   CONSTRAINT `fk_dictionary_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `dictionary`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE SET NULL
     ON UPDATE CASCADE,
   CONSTRAINT `fk_dictionary_langsource`
     FOREIGN KEY (`lang_source`)
-    REFERENCES `dictionary`.`language` (`id`)
+    REFERENCES `language` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_dictionary_langtranslat`
     FOREIGN KEY (`lang_translation`)
-    REFERENCES `dictionary`.`language` (`id`)
+    REFERENCES `language` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dictionary`.`word`
+-- Table `word`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dictionary`.`word` (
+CREATE TABLE IF NOT EXISTS `word` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `word` VARCHAR(100) NULL,
   `translation` VARCHAR(100) NULL,
@@ -77,16 +75,16 @@ CREATE TABLE IF NOT EXISTS `dictionary`.`word` (
   INDEX `fk_word_dictionary_idx` (`dictionary_id` ASC),
   CONSTRAINT `fk_word_dictionary`
     FOREIGN KEY (`dictionary_id`)
-    REFERENCES `dictionary`.`dictionary` (`id`)
+    REFERENCES `dictionary` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dictionary`.`learned`
+-- Table `learned`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dictionary`.`learned` (
+CREATE TABLE IF NOT EXISTS `learned` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` INT NULL,
   `word_id` INT NULL,
@@ -95,12 +93,12 @@ CREATE TABLE IF NOT EXISTS `dictionary`.`learned` (
   INDEX `fk_learned_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_learned_word`
     FOREIGN KEY (`word_id`)
-    REFERENCES `dictionary`.`word` (`id`)
+    REFERENCES `word` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_learned_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `dictionary`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;

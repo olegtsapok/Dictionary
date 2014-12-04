@@ -17,6 +17,9 @@ class CpRole extends CComponent
         $bizRule='return 1 == 1;';
 
         $crudModules = array(
+            'Dictionary',
+            'Word',
+            'Learned',
             'User',
             'Language',
         );

@@ -24,7 +24,6 @@ $this->menu=array(
 		'first_name',
 		'last_name',
 		'email',
-		'phone',
 		array(
 			'name' => 'Role',
 			'value' => array($model, 'renderRole'),

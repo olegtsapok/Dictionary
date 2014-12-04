@@ -8,7 +8,7 @@ require_once '_components.inc';
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
-	'name'=>'ProjectName',
+	'name'=>'Dictionary',
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 
 	//'sourceLanguage'=>'en_US',

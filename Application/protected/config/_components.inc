@@ -15,7 +15,7 @@ $components = array(
                 // enable cookie-based authentication
                 'allowAutoLogin'=>true,
                 'loginUrl'=>array('site/login'),
-                'returnUrl'=>array('user/index'),
+                'returnUrl'=>array('dictionary/index'),
         ),
 
         'authManager'=>array(
